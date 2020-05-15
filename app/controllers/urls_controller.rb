@@ -4,15 +4,15 @@ class UrlsController < ApplicationController
   def create
     @url = Url.find_by_original_url(params[:original_url])
     if @url
-      render status: :ok, json: { success: true, slug: @url.short_url  }
+      return render status: :ok, json: { success: true, slug: @url.short_url  }
     else
       @url = Url.new
       @url.original_url = params[:original_url]
       @url.sanitize
         if @url.save 
-          render status: :ok, json: { success: true, slug: @url.short_url }
+          return render status: :ok, json: { success: true, slug: @url.short_url }
         else
-          render status: :unprocessable_entity, json: { success: false, errors: @url.errors.full_messages }
+          return render status: :unprocessable_entity, json: { success: false, errors: @url.errors.full_messages }
         end
     end
   end
