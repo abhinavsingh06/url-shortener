@@ -5,18 +5,36 @@ A Ruby on Rails api to shorten the given URL. The shortened url should end with 
 ## Setup
 
 1.  Clone the repository and run through the following command
-    `$ git clone https://github.com/abhinavsingh06/url-shortener.git`
+
+```
+$ git clone https://github.com/abhinavsingh06/url-shortener.git
+```
+
 2.  Now, open to the cloned directory in terminal
-    `$ cd url-shortner`
+
+```
+$ cd url-shortner
+```
+
 3.  Install yarn dependencies by running the following commands
-    `$ yarn install --check-files`
-    `$ bundle i`
+
+```
+$ yarn install --check-files
+$ bundle i
+```
+
 4.  Setup the database
-    `$ bundle exec rake db:create db:migrate db:setup`
+
+```
+$ bundle exec rake db:create db:migrate db:setup
+```
 
 5.  Now we can run the rake tasks as follows
-    `$ URL=https://bigbinary.com/jobs bundle exec rake app:encode`
-    `$ SHORTURL=https://short.is/tkLo2367 bundle exec rake app:decode`
+
+```
+$ URL=https://bigbinary.com/jobs bundle exec rake app:encode
+$ SHORTURL=https://short.is/tkLo2367 bundle exec rake app:decode
+```
 
 ## How to test the API
 
