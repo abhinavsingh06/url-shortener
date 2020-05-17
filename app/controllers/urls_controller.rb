@@ -1,6 +1,9 @@
 class UrlsController < ApplicationController
   before_action :find_url, only: [:show]
 
+  def index
+  end
+
   def create
     @url = Url.find_by_original(params[:original])
     if @url
