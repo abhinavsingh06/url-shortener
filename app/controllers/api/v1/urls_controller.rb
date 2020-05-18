@@ -1,9 +1,11 @@
-class UrlsController < ApplicationController
+class Api::V1::UrlsController < ApplicationController
   before_action :find_url, only: [:show]
   skip_before_action :verify_authenticity_token
 
   def index
     @urls = Url.order(updated_at: :desc)
+    render json: @urls
+    # respond_with @urls.all
   end
 
   def create

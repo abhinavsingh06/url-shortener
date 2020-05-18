@@ -1,45 +1,60 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { Component } from 'react';
 import Header from './Header';
 import Pin from './Pin';
 
-export default function List(props) {
-  const [urls, setUrls] = useState(props.urls);
-  console.log(props.urls);
+export class List extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      urls: [],
+    };
+  }
 
-  useEffect(() =>
-    fetch('http://localhost:3000/')
-      .then(res => res.json())
-      .then(res => console.log(res))
-  );
+  componentDidMount() {
+    const url = '/api/v1/urls/index';
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(response => this.setState({ urls: response }))
+      .catch(() => this.props.history.push('/'));
+  }
 
-  return (
-    <>
-      <div className="container">
-        <Header />
-        <div className="table_container">
-          <table class="table table-dark">
-            <thead>
-              <tr>
-                <th scope="col">Pin</th>
-                <th scope="col">Original URL</th>
-                <th scope="col">Short URL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {urls.map(({ original, id, short, pinned }) => (
-                <tr key={id}>
-                  <th scope="row">
-                    <Pin />
-                  </th>
-                  <td>{original}</td>
-                  <td>https://short.is/{short}</td>
+  render() {
+    const { urls } = this.state;
+    return (
+      <>
+        <div className="container">
+          <Header />
+          <div className="table_container">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">Pin</th>
+                  <th scope="col">Original URL</th>
+                  <th scope="col">Short URL</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
-  );
+              </thead>
+              <tbody>
+                {urls.map(({ original, id, short, pinned }) => (
+                  <tr key={id}>
+                    <th scope="row">
+                      <Pin />
+                    </th>
+                    <td>{original}</td>
+                    <td>https://short.is/{short}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>{' '}
+      </>
+    );
+  }
 }
+
+export default List;

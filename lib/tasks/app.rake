@@ -1,7 +1,7 @@
 namespace :app do
   task :encode => :environment do
     include Rails.application.routes.url_helpers
-    url_link = urls_url(:host => "http://localhost:3000")
+    url_link = api_v1_urls_url(:host => "http://localhost:3000/api/v1")
     session = ActionDispatch::Integration::Session.new(Rails.application)
     session.post url_link, params: {"original": ENV['URL']} 
     response = JSON.parse(session.response.body)
@@ -13,7 +13,7 @@ namespace :app do
   task :decode => :environment do
     present_slug = ENV['SHORTURL'].last(8)
     include Rails.application.routes.url_helpers
-    url_link = urls_url(:host => "http://localhost:3000")
+    url_link = api_v1_urls_url(:host => "http://localhost:3000/api/v1")
     session = ActionDispatch::Integration::Session.new(Rails.application)
     session.get "#{url_link}/#{present_slug}"
     if session.response.status == 200
