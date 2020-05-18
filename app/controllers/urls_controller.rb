@@ -3,6 +3,7 @@ class UrlsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
+    @urls = Url.order(updated_at: :desc)
   end
 
   def create
