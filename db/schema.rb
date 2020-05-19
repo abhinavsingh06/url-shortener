@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_213224) do
+ActiveRecord::Schema.define(version: 2020_05_19_230527) do
 
   create_table "urls", force: :cascade do |t|
     t.string "original", null: false
     t.string "short", null: false
-    t.string "sanitize_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "pinned", default: false
