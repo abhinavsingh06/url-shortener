@@ -30,7 +30,7 @@ export class List extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    const url = '/api/v1/urls/index';
+    const url = '/api/v1/urls';
     fetch(url)
       .then(response => {
         if (response.ok) {
