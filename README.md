@@ -74,3 +74,53 @@ If the SHORTURL is not present in the database then print error message like sho
 ```
 No original url was found for the  short url https://short.is/poliwe71
 ```
+
+## Assumptions
+
+- A user can add a URL with rake task and add it to the database.
+
+```
+URL=https://bigbinary.com/jobs bundle exec rake app:encode
+```
+
+- A list of URLs will be displayed appearing as recent addition on top.
+
+- URLs can be pinned and unpinned.
+
+## Implementation
+
+- For URLs list
+
+  - Fetch URLs at `api/v1/urls/index` endpoint and render list items.
+
+  - List order created in descending order based on value updated_at
+
+- For pinned items
+
+  - Added pinned column in URLs table with boolean value type and default value as false.
+
+  - All pinned item with value true moved to top.
+
+  - Pinned items reamin at top and unpinned items fall back after pinned items list ends.
+
+## Endpoints
+
+```YAML
+index:
+  method: "GET"
+  path: "/api/v1/urls/index"
+
+create:
+  method: "POST"
+  path: "/api/v1/urls"
+  params: url: { original: "https://twitter.com" }
+
+show:
+  method: "GET"
+  path: "/api/v1/urls/:short"
+
+update:
+  method: "PUT"
+  path: "api/v1/urls/:short"
+  params: url: { pinned: true }
+```
