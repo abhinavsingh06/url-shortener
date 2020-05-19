@@ -36,9 +36,8 @@ class Api::V1::UrlsController < ApplicationController
 
   def update
     @url = Url.find_by_short(params[:short])
-    puts @url
     if @url.update(url_params)
-      render status: :ok, json: { urls: @urls }
+      render status: :ok, json: { urls: load_urls }
     end
   end
 
@@ -53,6 +52,6 @@ class Api::V1::UrlsController < ApplicationController
   end
 
   def load_urls
-    @urls = Url.order(updated_at: :desc)
+    @urls = Url.order(pinned: :desc, updated_at: :desc)
   end
 end

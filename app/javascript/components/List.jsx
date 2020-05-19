@@ -12,19 +12,18 @@ export class List extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(short, index) {
     const url = `/api/v1/urls/${short}`;
-    console.log(url);
     fetch(url, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').content,
       },
-      body: JSON.stringify({ urls: { pinned: true } }),
+      body: JSON.stringify({ url: { pinned: !this.state.urls[index].pinned } }),
     })
       .then(res => res.json())
-      .then(res => this.setState(res.urls));
+      .then(res => this.setState({ urls: res.urls }));
   }
 
   componentDidMount() {
@@ -56,12 +55,15 @@ export class List extends Component {
                 </tr>
               </thead>
               <tbody>
-                {urls.map(({ original, id, short, pinned }) => (
+                {urls.map(({ original, id, short, pinned }, index) => (
                   <tr key={id}>
                     <th
+                      className={
+                        pinned ? 'p-3 mb-2 bg-success text-white"' : ''
+                      }
                       scope="row"
                       style={{ cursor: 'pointer' }}
-                      onClick={this.handleClick}>
+                      onClick={() => this.handleClick(short, index)}>
                       <Pin />
                     </th>
                     <td>{original}</td>
