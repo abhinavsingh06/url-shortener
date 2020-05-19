@@ -15,6 +15,11 @@ export class List extends Component {
   }
 
   handleClick(short, index) {
+    this.setState({
+      urls: this.state.urls.map((url, id) =>
+        id === index ? { ...url, pinned: !url.pinned } : url
+      ),
+    });
     const url = `/api/v1/urls/${short}`;
     fetch(url, {
       method: 'PUT',
@@ -38,7 +43,9 @@ export class List extends Component {
         }
         throw new Error('Network response was not ok.');
       })
-      .then(response => this.setState({ urls: response, isLoading: false }))
+      .then(response =>
+        this.setState({ urls: response.urls, isLoading: false })
+      )
       .catch(() => this.props.history.push('/'));
   }
 
