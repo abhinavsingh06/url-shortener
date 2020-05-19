@@ -13,7 +13,6 @@ class Api::V1::UrlsController < ApplicationController
     else
       @url = Url.new
       @url.original = params[:original]
-      @url.generate_slug
         if @url.save
           return render status: :ok, json: { slug: @url.short }
         else

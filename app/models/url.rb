@@ -2,6 +2,9 @@ class Url < ApplicationRecord
   SLUG_LENGTH = 8
   validates :original, presence: true, on: :create
   validates :short, uniqueness: true
+  before_create :generate_slug
+
+  private
 
   def generate_slug
     loop do
