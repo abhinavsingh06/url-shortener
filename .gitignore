@@ -27,8 +27,8 @@
 /storage/*
 !/storage/.keep
 .byebug_history
-/public/assets
-/public/packs
+/public/assets/*
+/public/packs/*
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
