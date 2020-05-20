@@ -27,13 +27,13 @@
 /storage/*
 !/storage/.keep
 .byebug_history
+/public/assets
+/public/packs
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
 .DS_Store
-/public/assets
-/public/packs
 /public/packs-test
 /node_modules
 /yarn-error.log
