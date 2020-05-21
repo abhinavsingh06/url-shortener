@@ -7,23 +7,16 @@ class Api::V1::CaategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      render status: :ok, json: { notice: 'Category was successfully created', name: @category.name }
+      render status: :ok, json: { notice: 'Category was successfully created', category: @category }
     else 
       render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
-    end
-  end
-
-  def show
-    @category = Category.where(name: params[:name]).first
-    unless @category
-      redirect_to controller: "categories", action: "index"
     end
   end
 
   def update
     @category = Category.where(name: params[:name]).first
     if @category.update_attributes(category_params)
-      render status: :ok, json: { notice: "Successfully updated category." , name: @category.name}
+      render status: :ok, json: { notice: "Successfully updated category." , category: @category}
     else
       render status: :unprocessable_entity, json:{ errors: @category.errors.full_messages }
     end
