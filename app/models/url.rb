@@ -1,4 +1,5 @@
 class Url < ApplicationRecord
+  belongs_to :category
   SLUG_LENGTH = 8
   validates :original, presence: true, on: :create
   validates :short, uniqueness: true
