@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_230527) do
+ActiveRecord::Schema.define(version: 2020_05_21_172322) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "color", default: "#ffffff"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
 
   create_table "urls", force: :cascade do |t|
     t.string "original", null: false
@@ -18,6 +26,8 @@ ActiveRecord::Schema.define(version: 2020_05_19_230527) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "pinned", default: false
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_urls_on_category_id", unique: true
     t.index ["original"], name: "index_urls_on_original", unique: true
     t.index ["short"], name: "index_urls_on_short", unique: true
   end
