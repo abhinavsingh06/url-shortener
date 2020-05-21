@@ -6,6 +6,6 @@ class CreateCategories < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_reference :urls, :category, index: {unique: true}
+    add_reference :urls, :category
   end
 end

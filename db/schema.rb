@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_172322) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "pinned", default: false
     t.integer "category_id"
-    t.index ["category_id"], name: "index_urls_on_category_id", unique: true
+    t.index ["category_id"], name: "index_urls_on_category_id"
     t.index ["original"], name: "index_urls_on_original", unique: true
     t.index ["short"], name: "index_urls_on_short", unique: true
   end
