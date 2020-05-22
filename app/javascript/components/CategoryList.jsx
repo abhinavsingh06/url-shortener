@@ -7,9 +7,6 @@ export class CategoryList extends Component {
     this.state = {};
   }
   render() {
-    {
-      console.log(this.props);
-    }
     const { categories } = this.props;
     return (
       <>

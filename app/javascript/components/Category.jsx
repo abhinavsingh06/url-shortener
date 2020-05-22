@@ -6,9 +6,7 @@ import Header from '../components/Header';
 export class Category extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      categories: [],
-    };
+    this.state = { categories: [{ name: '', color: '' }] };
   }
 
   componentDidMount() {
@@ -29,7 +27,7 @@ export class Category extends Component {
         <Header />
         <div className="container">
           <div className="d-flex justify-content-center m-3">
-            <CategoryForm />
+            <CategoryForm {...this.state} />
           </div>
           <div className="w-60 p-3">
             <CategoryList {...this.state} />
