@@ -1,11 +1,14 @@
-class Api::V1::CaategoriesController < ApplicationController
+class Api::V1::CategoriesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    @categories = Category.order(updated_at: :desc)
+    @categories = Category.all
     render status: :ok, json: { categories: @categories }
   end
 
   def create
-    @category = Category.new(category_params)
+    @category = Category.create(category_params)
+    puts params.inspect
     if @category.save
       render status: :ok, json: { notice: 'Category was successfully created', category: @category }
     else 
@@ -14,8 +17,9 @@ class Api::V1::CaategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.where(name: params[:name]).first
-    if @category.update_attributes(category_params)
+    @category = Category.find_by_name(params[:name])
+    puts params
+    if @category.update(category_params)
       render status: :ok, json: { notice: "Successfully updated category." , category: @category}
     else
       render status: :unprocessable_entity, json:{ errors: @category.errors.full_messages }
@@ -24,6 +28,7 @@ class Api::V1::CaategoriesController < ApplicationController
 
   def destroy
     @category = Category.where(name: params[:name]).first
+    puts params
     if @category.destroy
       render status: :ok, json: { notice: "Successfully deleted category." }
     else
