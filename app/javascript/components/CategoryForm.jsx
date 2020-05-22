@@ -16,6 +16,9 @@ export class CategoryForm extends Component {
                 id="inlineFormInput"
                 placeholder="Enter category"></input>
             </div>
+            <div className="col-auto">
+              <input type="color"></input>
+            </div>
             <div class="col-auto">
               <button type="submit" class="btn btn-primary mb-2">
                 Add

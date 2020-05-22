@@ -65,6 +65,7 @@ export class List extends Component {
                     <th scope="col">Pin</th>
                     <th scope="col">Original URL</th>
                     <th scope="col">Short URL</th>
+                    <th scope="col">Category</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,6 +82,32 @@ export class List extends Component {
                       </th>
                       <td>{original}</td>
                       <td>https://short.is/{short}</td>
+                      <td>
+                        <div class="dropdown">
+                          <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenu2"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                            Select
+                          </button>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">
+                              Action
+                            </button>
+                            <button class="dropdown-item" type="button">
+                              Another action
+                            </button>
+                            <button class="dropdown-item" type="button">
+                              Something else here
+                            </button>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
