@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_172322) do
+ActiveRecord::Schema.define(version: 2020_05_22_195139) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -32,4 +32,5 @@ ActiveRecord::Schema.define(version: 2020_05_21_172322) do
     t.index ["short"], name: "index_urls_on_short", unique: true
   end
 
+  add_foreign_key "urls", "categories"
 end
