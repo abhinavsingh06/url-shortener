@@ -8,10 +8,10 @@ export default function Header() {
         <h2>URL-Shortener</h2>
         <div className="button">
           <Link
-            to="/category"
-            class="btn btn-secondary btn-lg active"
+            className="btn btn-secondary btn-lg active"
             role="button"
-            aria-pressed="true">
+            aria-pressed="true"
+            to="/category">
             Manage category
           </Link>
         </div>

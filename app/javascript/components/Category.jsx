@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import CategoryEditForm from './CategoryEditForm';
 
 export class Category extends Component {
   constructor(props) {
@@ -10,10 +11,12 @@ export class Category extends Component {
         name: '',
         color: '#ffffff',
       },
+      showComponent: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClick = this.onClick.bind(this, false);
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -45,6 +48,10 @@ export class Category extends Component {
       );
   }
 
+  onClick() {
+    this.setState({ showComponent: true });
+  }
+
   componentDidMount() {
     const url = '/api/v1/categories';
     fetch(url)
@@ -59,48 +66,46 @@ export class Category extends Component {
   }
 
   render() {
-    const { categories } = this.state;
-    {
-      console.log(categories);
-    }
+    const { categories, showComponent } = this.state;
     return (
       <>
         <Header />
         <div className="container">
           <div className="d-flex justify-content-center m-3">
-            <form onSubmit={this.onSubmit}>
-              <div class="form-row align-items-center">
-                <div class="col-auto">
-                  <label class="sr-only" htmlFor="inlineFormInput">
-                    Category
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    class="form-control mb-2"
-                    id="inlineFormInput"
-                    value={this.state.formData.name}
-                    onChange={this.handleChange}
-                    placeholder="Enter category"></input>
+            {showComponent ? (
+              <CategoryEditForm {...this.state} />
+            ) : (
+              <form onSubmit={this.onSubmit}>
+                <div className="form-row align-items-center">
+                  <div className="col-auto">
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control mb-2"
+                      id="inlineFormInput"
+                      value={this.state.formData.name}
+                      onChange={this.handleChange}
+                      placeholder="Enter category"></input>
+                  </div>
+                  <div className="col-auto">
+                    <input
+                      name="color"
+                      type="color"
+                      value={this.state.formData.color}
+                      onChange={this.handleChange}></input>
+                  </div>
+                  <div className="col-auto">
+                    <button type="submit" className="btn btn-primary mb-2">
+                      Add
+                    </button>
+                  </div>
                 </div>
-                <div className="col-auto">
-                  <input
-                    name="color"
-                    type="color"
-                    value={this.state.formData.color}
-                    onChange={this.handleChange}></input>
-                </div>
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-primary mb-2">
-                    Add
-                  </button>
-                </div>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
           <div className="w-60 p-3">
             {categories && (
-              <table class="table table-dark">
+              <table className="table table-dark">
                 <thead>
                   <tr>
                     <th scope="col">Category name</th>
@@ -117,12 +122,15 @@ export class Category extends Component {
                         </span>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-warning">
+                        <button
+                          type="button"
+                          className="btn btn-warning"
+                          onClick={() => this.onClick()}>
                           Edit
                         </button>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" className="btn btn-danger">
                           Delete
                         </button>
                       </td>

@@ -10,7 +10,8 @@ class Api::V1::UrlsController < ApplicationController
         category[url.id] = url.category
       end  
     end
-    render status: :ok, json: { urls: @urls, category: category }
+    @categories = Category.all.map{|c| [c.name, c.color, c.id]}
+    render status: :ok, json: { urls: @urls, category: category, categories: @categories }
   end
 
   # def new

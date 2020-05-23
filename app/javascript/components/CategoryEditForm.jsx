@@ -5,20 +5,20 @@ export class CategoryEditForm extends Component {
     return (
       <React.Fragment>
         <form>
-          <div class="form-row align-items-center">
-            <div class="col-auto">
-              <label class="sr-only" for="inlineFormInput">
-                Category
-              </label>
+          <div className="form-row align-items-center">
+            <div className="col-auto">
               <input
                 type="text"
-                class="form-control mb-2"
+                className="form-control mb-2"
                 id="inlineFormInput"
-                placeholder="Enter category"></input>
+                placeholder="Edit category"></input>
             </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-primary mb-2">
-                Add
+            <div className="col-auto">
+              <input name="color" type="color"></input>
+            </div>
+            <div className="col-auto">
+              <button type="submit" className="btn btn-primary mb-2">
+                Update
               </button>
             </div>
           </div>

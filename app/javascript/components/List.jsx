@@ -9,6 +9,7 @@ export class List extends Component {
     this.state = {
       urls: [],
       category: [],
+      categories: [],
       isLoading: false,
     };
 
@@ -48,6 +49,7 @@ export class List extends Component {
         this.setState({
           urls: response.urls,
           category: response.category,
+          categories: response.categories,
           isLoading: false,
         })
       )
@@ -55,8 +57,10 @@ export class List extends Component {
   }
 
   render() {
-    const { urls, pinned, isLoading, category } = this.state;
-    console.log(category);
+    const { urls, pinned, isLoading, category, categories } = this.state;
+    {
+      console.log(categories);
+    }
     return (
       <>
         <div>
@@ -89,10 +93,10 @@ export class List extends Component {
                       <td>{original}</td>
                       <td>https://short.is/{short}</td>
                       <td>
-                        <div class="dropdown">
-                          {category[id] && (
+                        <div className="dropdown">
+                          {category[id] ? (
                             <button
-                              class="btn btn-secondary dropdown-toggle"
+                              className="btn btn-secondary dropdown-toggle"
                               type="button"
                               id="dropdownMenu2"
                               data-toggle="dropdown"
@@ -100,13 +104,25 @@ export class List extends Component {
                               aria-expanded="false">
                               {category[id].name}
                             </button>
+                          ) : (
+                            <button
+                              className="btn btn-secondary dropdown-toggle"
+                              type="button"
+                              id="dropdownMenu2"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false">
+                              Select
+                            </button>
                           )}
                           <div
-                            class="dropdown-menu"
+                            className="dropdown-menu"
                             aria-labelledby="dropdownMenu2">
-                            <button
-                              class="dropdown-item"
-                              type="button"></button>
+                            {categories.map(({ name, id, color }) => {
+                              <button className="dropdown-item" type="button">
+                                {name}
+                              </button>;
+                            })}
                           </div>
                         </div>
                       </td>
