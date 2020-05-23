@@ -8,6 +8,7 @@ export class List extends Component {
     super(props);
     this.state = {
       urls: [],
+      category: [],
       isLoading: false,
     };
 
@@ -44,13 +45,18 @@ export class List extends Component {
         throw new Error('Network response was not ok.');
       })
       .then(response =>
-        this.setState({ urls: response.urls, isLoading: false })
+        this.setState({
+          urls: response.urls,
+          category: response.category,
+          isLoading: false,
+        })
       )
       .catch(() => this.props.history.push('/'));
   }
 
   render() {
-    const { urls, pinned, isLoading } = this.state;
+    const { urls, pinned, isLoading, category } = this.state;
+    console.log(category);
     return (
       <>
         <div>
@@ -84,27 +90,23 @@ export class List extends Component {
                       <td>https://short.is/{short}</td>
                       <td>
                         <div class="dropdown">
-                          <button
-                            class="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenu2"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            Select
-                          </button>
+                          {category[id] && (
+                            <button
+                              class="btn btn-secondary dropdown-toggle"
+                              type="button"
+                              id="dropdownMenu2"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false">
+                              {category[id].name}
+                            </button>
+                          )}
                           <div
                             class="dropdown-menu"
                             aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" type="button">
-                              Action
-                            </button>
-                            <button class="dropdown-item" type="button">
-                              Another action
-                            </button>
-                            <button class="dropdown-item" type="button">
-                              Something else here
-                            </button>
+                            <button
+                              class="dropdown-item"
+                              type="button"></button>
                           </div>
                         </div>
                       </td>

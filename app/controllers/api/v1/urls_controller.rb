@@ -7,7 +7,7 @@ class Api::V1::UrlsController < ApplicationController
     category = {}
     @urls.each do |url|
       if url.category
-        category[url.id] = url.category.as_json
+        category[url.id] = url.category
       end  
     end
     render status: :ok, json: { urls: @urls, category: category }
