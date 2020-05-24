@@ -1,4 +1,3 @@
 one:
   original: 'https://xyz.com'
   short: 'kwcp5b10'
-  sanitize_url: 'https://xyz.com'
