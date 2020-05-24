@@ -2,6 +2,8 @@
 
 A Ruby on Rails api to shorten the given URL. The shortened url should end with 8 letters code. Something like [https://short.is/U89K34lQ](https://short.is/U89K34lQ) .
 
+Heroku link: https://url-shortener-abhinavsingh06.herokuapp.com/
+
 ## Setup
 
 1.  Clone the repository and run through the following command
@@ -87,6 +89,12 @@ URL=https://bigbinary.com/jobs bundle exec rake app:encode
 
 - URLs can be pinned and unpinned.
 
+- A user can add, read, update and delete categories.
+
+- The categories will be reflected on the URL list.
+
+- The URL category list can be updated.
+
 ## Implementation
 
 - For URLs list
@@ -103,12 +111,22 @@ URL=https://bigbinary.com/jobs bundle exec rake app:encode
 
   - Pinned items reamin at top and unpinned items fall back after pinned items list ends.
 
+- For category
+
+  - CRUD for categories
+
+  - Update categories on URL's list
+
+  - Update category on list.
+
 ## Endpoints
+
+## URL
 
 ```YAML
 index:
   method: "GET"
-  path: "/api/v1/urls/index"
+  path: "/api/v1/urls"
 
 create:
   method: "POST"
@@ -123,4 +141,24 @@ update:
   method: "PUT"
   path: "api/v1/urls/:short"
   params: url: { pinned: true }
+```
+
+## CATEGORY
+
+```YAML
+index:
+  method: "GET"
+  path: "/api/v1/categories"
+
+create:
+  method: "POST"
+  path: "/api/v1/categories"
+
+show:
+  method: "GET"
+  path: "/api/v1/categories/:id"
+
+update:
+  method: "PUT"
+  path: "api/v1/categories/:id"
 ```
