@@ -101,7 +101,8 @@ export class List extends Component {
                               id="dropdownMenu2"
                               data-toggle="dropdown"
                               aria-haspopup="true"
-                              aria-expanded="false">
+                              aria-expanded="false"
+                              style={{ width: '70%' }}>
                               {category[id].name}
                             </button>
                           ) : (
@@ -111,8 +112,9 @@ export class List extends Component {
                               id="dropdownMenu2"
                               data-toggle="dropdown"
                               aria-haspopup="true"
-                              aria-expanded="false">
-                              Select
+                              aria-expanded="false"
+                              style={{ width: '70%' }}>
+                              Select category
                             </button>
                           )}
                           <div
