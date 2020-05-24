@@ -4,7 +4,12 @@ export class CategoryEditForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editFormData: { name: '', color: '' },
+      categories: this.props.categories,
+      showComponentId: this.props.showComponentId,
+      editFormData: { name: '', color: '#ffffff' },
+      // category: this.props.categories.filter(
+      //   category => category.id === this.props.showComponentId
+      // )[0],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,11 +25,13 @@ export class CategoryEditForm extends Component {
     });
   };
 
-  onSubmit(event) {
-    event.preventDefault();
-    const url = `/api/v1/categories/${name}`;
+  onSubmit(e) {
+    e.preventDefault();
+    const showComponentId = this.state.showComponentId;
+    // const category = this.state.category;
+    const url = `/api/v1/categories/${showComponentId}`;
     fetch(url, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').content,
@@ -32,12 +39,7 @@ export class CategoryEditForm extends Component {
       body: JSON.stringify(this.state.editFormData),
     })
       .then(res => res.json())
-      .then(res =>
-        this.setState({
-          categories: [...this.state.categories, res.category],
-          editFormData: { name: '', color: '' },
-        })
-      );
+      .then(res => this.props.changeCategories(res.category));
   }
 
   render() {

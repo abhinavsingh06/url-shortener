@@ -17,20 +17,20 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.find_by_name(params[:name])
+    @category = Category.find(params[:id])
     puts params
     if @category.update(category_params)
-      render status: :ok, json: { notice: "Successfully updated category." , category: @category}
+      render status: :ok, json: { notice: "Successfully updated category." , category: Category.all}
     else
       render status: :unprocessable_entity, json:{ errors: @category.errors.full_messages }
     end
   end
 
   def destroy
-    @category = Category.where(name: params[:name]).first
+    @category = Category.where(id: params[:id]).first
     puts params
     if @category.destroy
-      render status: :ok, json: { notice: "Successfully deleted category." }
+      render status: :ok, json: { notice: "Successfully deleted category.", category: Category.all }
     else
       render status: :unprocessable_entity, json: { errors: @task.errors.full_messages }
     end

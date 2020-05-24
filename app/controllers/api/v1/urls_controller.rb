@@ -4,14 +4,8 @@ class Api::V1::UrlsController < ApplicationController
 
   def index
     @urls = Url.order(pinned: :desc, updated_at: :desc)
-    category = {}
-    @urls.each do |url|
-      if url.category
-        category[url.id] = url.category
-      end  
-    end
-    @categories = Category.all.map{|c| [c.name, c.color, c.id]}
-    render status: :ok, json: { urls: @urls, category: category, categories: @categories }
+    @categories = Category.all.map{|c| {name:c.name,color: c.color,id: c.id}}
+    render status: :ok, json: { urls: @urls, categories: @categories }
   end
 
   # def new
@@ -51,7 +45,9 @@ class Api::V1::UrlsController < ApplicationController
   def update
     @url = Url.find_by_short(params[:short])
     if @url.update(url_params)
-      render status: :ok, json: { urls: Url.order(pinned: :desc, updated_at: :desc) }
+      @urls = Url.order(pinned: :desc, updated_at: :desc)
+      @categories = Category.all.map{|c| {name:c.name,color: c.color,id: c.id}}
+      render status: :ok, json: { urls: @urls, categories: @categories }
     else
       render status: :not_found
     end

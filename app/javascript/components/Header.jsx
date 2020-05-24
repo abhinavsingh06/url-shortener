@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
+  const { pathname } = useLocation();
   return (
     <>
       <nav className="navbar navbar-dark bg-dark">
@@ -11,8 +12,8 @@ export default function Header() {
             className="btn btn-secondary btn-lg active"
             role="button"
             aria-pressed="true"
-            to="/category">
-            Manage category
+            to={pathname === '/' ? '/category' : '/'}>
+            {pathname === '/' ? 'Manage category' : 'Manage Link'}
           </Link>
         </div>
       </nav>

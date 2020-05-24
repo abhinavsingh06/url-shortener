@@ -80,8 +80,8 @@ export class Category extends Component {
     this.setState({ showComponentId: id });
   }
 
-  onDelete(name) {
-    const url = `/api/v1/categories/${name}`;
+  onDelete(id) {
+    const url = `/api/v1/categories/${id}`;
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -91,11 +91,12 @@ export class Category extends Component {
       body: JSON.stringify(this.state.categories),
     })
       .then(res => res.json())
-      .then(res =>
-        // this.setState( { categories: [res.categories] } )
-        console.log(...this.state.categories)
-      );
+      .then(res => this.changeCategories(res.category));
   }
+
+  changeCategories = data => {
+    this.setState({ categories: data });
+  };
 
   componentDidMount() {
     const url = '/api/v1/categories';
@@ -122,7 +123,10 @@ export class Category extends Component {
           ) : null}
           <div className="d-flex justify-content-center m-3">
             {showComponentId !== -1 ? (
-              <CategoryEditForm {...this.state} />
+              <CategoryEditForm
+                changeCategories={this.changeCategories}
+                {...this.state}
+              />
             ) : (
               <form onSubmit={this.onSubmit}>
                 <div className="form-row align-items-center">
@@ -183,7 +187,7 @@ export class Category extends Component {
                         <button
                           type="button"
                           className="btn btn-danger"
-                          onClick={() => this.onDelete(category.name)}>
+                          onClick={() => this.onDelete(category.id)}>
                           Delete
                         </button>
                       </td>
