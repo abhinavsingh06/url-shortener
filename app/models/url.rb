@@ -1,6 +1,5 @@
 class Url < ApplicationRecord
-  belongs_to :category
-  SLUG_LENGTH = 8
+  belongs_to :category, foreign_key: :category_id, optional: true
   validates :original, presence: true, on: :create
   validates :short, uniqueness: true
   before_create :generate_slug
