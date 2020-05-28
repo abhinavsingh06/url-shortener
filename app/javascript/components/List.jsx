@@ -16,13 +16,13 @@ export class List extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  handleClick(short, index) {
+  handleClick(id, index) {
     this.setState({
       urls: this.state.urls.map((url, id) =>
         id === index ? { ...url, pinned: !url.pinned } : url
       ),
     });
-    const url = `/api/v1/urls/${short}`;
+    const url = `/api/v1/urls/${id}`;
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -74,7 +74,7 @@ export class List extends Component {
   }
 
   render() {
-    const { urls, pinned, isLoading, category, categories } = this.state;
+    const { urls, isLoading, categories } = this.state;
     return (
       <>
         <div>
@@ -82,7 +82,7 @@ export class List extends Component {
           {isLoading ? (
             <Loader className="loader" />
           ) : (
-            <div className="table_container">
+            <div className="table_container w-60 p-3">
               <table className="table table-dark">
                 <thead>
                   <tr>
@@ -102,17 +102,25 @@ export class List extends Component {
                           }
                           scope="row"
                           style={{ cursor: 'pointer' }}
-                          onClick={() => this.handleClick(short, index)}>
+                          onClick={() => this.handleClick(id, index)}>
                           <Pin />
                         </th>
-                        <td>{original}</td>
-                        <td>https://short.is/{short}</td>
+                        <td>
+                          <a href={original} target="_blank">
+                            {original}
+                          </a>
+                        </td>
+                        <td>
+                          <a href="#" target="_blank">
+                            https://short.is/{short}
+                          </a>
+                        </td>
                         <td>
                           <div>
                             <select
                               name="category_id"
                               value={category_id ? category_id : '000'}
-                              data-url-id={short}
+                              data-url-id={id}
                               onChange={this.onChange}>
                               <option value="000" disabled="disabled">
                                 Select category
