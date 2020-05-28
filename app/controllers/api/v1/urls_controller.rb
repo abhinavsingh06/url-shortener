@@ -1,17 +1,11 @@
 class Api::V1::UrlsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  # before_action :load_category, only: [:create]
 
   def index
     @urls = Url.order(pinned: :desc, updated_at: :desc)
     @categories = Category.all.map{|c| {name:c.name,color: c.color,id: c.id}}
     render status: :ok, json: { urls: @urls, categories: @categories }
   end
-
-  # def new
-  #   @url = Url.new
-  #   @categories = Category.all.map{|c| [c.name, c.color, c.id]}
-  # end
 
   def create
     @url = Url.find_by_original(params[:original])
@@ -20,7 +14,6 @@ class Api::V1::UrlsController < ApplicationController
     else
       @url = Url.new
       @url.original = params[:original]
-      # @url.category_id = params[:category_id] 
         if @url.save
           return render status: :ok, json: { slug: @url.short }
         else
@@ -43,7 +36,8 @@ class Api::V1::UrlsController < ApplicationController
   end
 
   def update
-    @url = Url.find_by_short(params[:short])
+    # @url = Url.find_by_short(params[:short])
+    @url = Url.find(params[:id])
     if @url.update(url_params)
       @urls = Url.order(pinned: :desc, updated_at: :desc)
       @categories = Category.all.map{|c| {name:c.name,color: c.color,id: c.id}}
@@ -59,10 +53,4 @@ class Api::V1::UrlsController < ApplicationController
     params.require(:url).permit(:original, :category_id, :pinned)
   end
 
-  # def load_category
-  #   begin
-  #     @category = Category.find_by_category_id(params[:category_id])
-  #   rescue ActiveRecord::RecordNotFound
-  #   end
-  # end
 end
