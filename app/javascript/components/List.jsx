@@ -111,7 +111,7 @@ export class List extends Component {
                           </a>
                         </td>
                         <td>
-                          <a href="#" target="_blank">
+                          <a href={original} target="_blank">
                             https://short.is/{short}
                           </a>
                         </td>
