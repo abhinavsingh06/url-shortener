@@ -13,6 +13,7 @@ export class List extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleCount = this.handleCount.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -33,6 +34,19 @@ export class List extends Component {
     })
       .then(res => res.json())
       .then(res => this.setState({ urls: res.urls }));
+  }
+
+  handleCount(short) {
+    const url = `/api/v1/urls/${short}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').content,
+      },
+    })
+      .then(res => res.json())
+      .then(res => window.open(res.original));
   }
 
   onChange(event) {
@@ -114,8 +128,8 @@ export class List extends Component {
                             {original}
                           </a>
                         </td>
-                        <td>
-                          <a href="#" target="_blank">
+                        <td onClick={() => this.handleCount(short)}>
+                          <a target="_blank" style={{ cursor: 'pointer' }}>
                             {process.env.ROOT_URL}
                             {short}
                           </a>

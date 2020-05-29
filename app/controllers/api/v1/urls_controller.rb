@@ -24,11 +24,12 @@ class Api::V1::UrlsController < ApplicationController
 
   def show
     @url = Url.find_by_short(params[:short])
+    @url.update(count: @url.count + 1)
     if @url
       if @url.category
         render status: :ok, json: { original: @url.original, category: @url.category }
       else
-        render status: :ok, json: { original: @url.original }
+        render status: :ok, json: { original: @url.original, count: @url.count }
       end
     else
       render status: :not_found
