@@ -89,12 +89,16 @@ export class List extends Component {
                     <th scope="col">Pin</th>
                     <th scope="col">Original URL</th>
                     <th scope="col">Short URL</th>
+                    <th scope="col">Count</th>
                     <th scope="col">Category</th>
                   </tr>
                 </thead>
                 <tbody>
                   {urls.map(
-                    ({ original, id, short, pinned, category_id }, index) => (
+                    (
+                      { original, id, short, pinned, category_id, count },
+                      index
+                    ) => (
                       <tr key={id}>
                         <th
                           className={
@@ -111,10 +115,11 @@ export class List extends Component {
                           </a>
                         </td>
                         <td>
-                          <a href={original} target="_blank">
+                          <a href="#" target="_blank">
                             https://short.is/{short}
                           </a>
                         </td>
+                        <td>{count}</td>
                         <td>
                           <div>
                             <select
