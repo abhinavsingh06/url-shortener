@@ -13,6 +13,7 @@ export class List extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleCount = this.handleCount.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -33,6 +34,19 @@ export class List extends Component {
     })
       .then(res => res.json())
       .then(res => this.setState({ urls: res.urls }));
+  }
+
+  handleCount(short) {
+    const url = `/api/v1/urls/${short}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').content,
+      },
+    })
+      .then(res => res.json())
+      .then(res => window.open(res.original));
   }
 
   onChange(event) {
@@ -89,12 +103,16 @@ export class List extends Component {
                     <th scope="col">Pin</th>
                     <th scope="col">Original URL</th>
                     <th scope="col">Short URL</th>
+                    <th scope="col">Count</th>
                     <th scope="col">Category</th>
                   </tr>
                 </thead>
                 <tbody>
                   {urls.map(
-                    ({ original, id, short, pinned, category_id }, index) => (
+                    (
+                      { original, id, short, pinned, category_id, count },
+                      index
+                    ) => (
                       <tr key={id}>
                         <th
                           className={
@@ -110,11 +128,13 @@ export class List extends Component {
                             {original}
                           </a>
                         </td>
-                        <td>
-                          <a href={original} target="_blank">
-                            https://short.is/{short}
+                        <td onClick={() => this.handleCount(short)}>
+                          <a target="_blank" style={{ cursor: 'pointer' }}>
+                            {process.env.ROOT_URL}
+                            {short}
                           </a>
                         </td>
+                        <td>{count}</td>
                         <td>
                           <div>
                             <select

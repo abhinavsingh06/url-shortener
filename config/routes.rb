@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "urls/:short" => "urls#show"
       resources :urls, only: [:index, :create, :show, :update]
       resources :categories, only: [:index, :create, :update, :destroy]
     end

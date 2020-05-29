@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'responders'
 gem 'pg', :group => [:production]
 gem 'rails_12factor', :group => [:production]
+gem 'dotenv-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
