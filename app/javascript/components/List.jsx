@@ -116,7 +116,8 @@ export class List extends Component {
                         </td>
                         <td>
                           <a href="#" target="_blank">
-                            https://short.is/{short}
+                            {process.env.ROOT_URL}
+                            {short}
                           </a>
                         </td>
                         <td>{count}</td>
