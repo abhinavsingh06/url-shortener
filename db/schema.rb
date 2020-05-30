@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_121330) do
+ActiveRecord::Schema.define(version: 2020_05_30_185105) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -33,5 +33,13 @@ ActiveRecord::Schema.define(version: 2020_05_29_121330) do
     t.index ["short"], name: "index_urls_on_short", unique: true
   end
 
+  create_table "visits", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "urls_id"
+    t.index ["urls_id"], name: "index_visits_on_urls_id"
+  end
+
   add_foreign_key "urls", "categories"
+  add_foreign_key "visits", "urls", column: "urls_id"
 end

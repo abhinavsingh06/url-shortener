@@ -129,7 +129,10 @@ export class List extends Component {
                           </a>
                         </td>
                         <td onClick={() => this.handleCount(short)}>
-                          <a target="_blank" style={{ cursor: 'pointer' }}>
+                          <a
+                            target="_blank"
+                            style={{ cursor: 'pointer' }}
+                            className="text-primary">
                             {process.env.ROOT_URL}
                             {short}
                           </a>

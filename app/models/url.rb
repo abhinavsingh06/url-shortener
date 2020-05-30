@@ -4,6 +4,7 @@ class Url < ApplicationRecord
   validates :short, uniqueness: true
   validates :count, presence: true, numericality: { only_integer: true }
   before_create :generate_slug
+  has_many :visits
 
   private
 

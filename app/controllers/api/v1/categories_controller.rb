@@ -8,7 +8,6 @@ class Api::V1::CategoriesController < ApplicationController
 
   def create
     @category = Category.create(category_params)
-    puts params.inspect
     if @category.save
       render status: :ok, json: { notice: 'Category was successfully created', category: @category }
     else 
