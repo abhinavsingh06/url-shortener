@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Loader from './Loader';
 
 export class Report extends Component {
   constructor() {
     super();
-    this.state = { visits: {} };
+    this.state = { visits: {}, isLoading: false };
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     const url = '/api/v1/visits';
     fetch(url)
       .then(response => {
@@ -19,13 +21,14 @@ export class Report extends Component {
       .then(response =>
         this.setState({
           visits: response.visits,
+          isLoading: false,
         })
       )
       .catch(() => this.props.history.push('/'));
   }
 
   render() {
-    const { visits } = this.state;
+    const { visits, isLoading } = this.state;
     const keys = Object.keys(visits);
     const month = [
       'JANUARY',
@@ -48,18 +51,22 @@ export class Report extends Component {
           <div className="mb-3">
             <Header />
           </div>
-          <div className="container">
-            {keys.map((index, id) => (
-              <ul className="list-group" key={id}>
-                <li className="list-group-item d-flex justify-content-between align-items-center">
-                  {month[index - 1]}
-                  <span className="badge badge-primary badge-pill">
-                    {visits[index].length}
-                  </span>
-                </li>
-              </ul>
-            ))}
-          </div>
+          {isLoading ? (
+            <Loader className="loader" />
+          ) : (
+            <div className="container">
+              {keys.map((index, id) => (
+                <ul className="list-group" key={id}>
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    {month[index - 1]}
+                    <span className="badge badge-primary badge-pill">
+                      {visits[index].length}
+                    </span>
+                  </li>
+                </ul>
+              ))}
+            </div>
+          )}
         </div>
       </>
     );
