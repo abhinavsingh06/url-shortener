@@ -4,11 +4,11 @@ import Header from './Header';
 export class Report extends Component {
   constructor() {
     super();
-    this.state = { urls: [] };
+    this.state = { visits: {} };
   }
 
   componentDidMount() {
-    const url = '/api/v1/urls';
+    const url = '/api/v1/visits';
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -18,15 +18,30 @@ export class Report extends Component {
       })
       .then(response =>
         this.setState({
-          urls: response.urls,
+          visits: response.visits,
         })
       )
       .catch(() => this.props.history.push('/'));
   }
 
   render() {
-    const { urls } = this.state;
-    console.log(urls);
+    const { visits } = this.state;
+    const keys = Object.keys(visits);
+    const month = [
+      'JANUARY',
+      'FEBRUARY',
+      'MARCH',
+      'APRIL',
+      'MAY',
+      'JUNE',
+      'JULY',
+      'AUGUST',
+      'SEPTEMBER',
+      'OCTOBER',
+      'NOVEMBER',
+      'DECEMBER',
+    ];
+
     return (
       <>
         <div>
@@ -34,12 +49,16 @@ export class Report extends Component {
             <Header />
           </div>
           <div className="container">
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Cras justo odio
-                <span class="badge badge-primary badge-pill">14</span>
-              </li>
-            </ul>
+            {keys.map((index, id) => (
+              <ul className="list-group" key={id}>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  {month[index - 1]}
+                  <span className="badge badge-primary badge-pill">
+                    {visits[index].length}
+                  </span>
+                </li>
+              </ul>
+            ))}
           </div>
         </div>
       </>
