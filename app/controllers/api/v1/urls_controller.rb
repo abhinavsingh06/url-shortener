@@ -25,11 +25,12 @@ class Api::V1::UrlsController < ApplicationController
   def show
     @url = Url.find_by_short(params[:short])
     @url.update_attributes(count: @url.count + 1)
+    @visit = Visit.create(urls_id: @url.id)
     if @url
       if @url.category
         render status: :ok, json: { original: @url.original, category: @url.category }
       else
-        render status: :ok, json: { original: @url.original, count: @url.count }
+        render status: :ok, json: { original: @url.original, count: @url.count, visits: @visit }
       end
     else
       render status: :not_found
@@ -37,7 +38,6 @@ class Api::V1::UrlsController < ApplicationController
   end
 
   def update
-    # @url = Url.find_by_short(params[:short])
     @url = Url.find(params[:id])
     if @url.update(url_params)
       @urls = Url.order(pinned: :desc, updated_at: :desc)
