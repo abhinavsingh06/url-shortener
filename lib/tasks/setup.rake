@@ -48,8 +48,16 @@ task setup_sample_data: [:environment, :not_production] do
     "http://www.wikipedia.org"
   ]
 
+  visits = [
+    "1", "2", "3", "4", "6", "8" ,"9"
+  ]
+
   urls.each do |url|
     create_url(url)
+  end
+
+  visits.each do |visit|
+    rand(0..5).times { create_visits(visit) }
   end
 
   puts "sample data was added successfully"
@@ -57,4 +65,11 @@ end
 
 def create_url(original)
   Url.create!(original: original)
+end
+
+def create_visits(urls_id)
+  visit = Visit.create!(urls_id: urls_id)
+  @url = Url.find(urls_id)
+  @url.update(count: @url.count+1)
+  visit.update( created_at: rand(1..100).days.ago)
 end
