@@ -56,8 +56,8 @@ task setup_sample_data: [:environment, :not_production] do
     create_url(url)
   end
 
-  visits.each do |visit|
-    rand(0..5).times { create_visits(visit) }
+  Url.all.each do |url|
+    rand(0..5).times { create_visits(url.id) }
   end
 
   puts "sample data was added successfully"
