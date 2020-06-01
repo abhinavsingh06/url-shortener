@@ -17,6 +17,7 @@ def generate_slug
   end  
 end
 
+Visit.destroy_all
 Url.destroy_all
 
 urls.each do |url|
